@@ -1,4 +1,5 @@
-﻿using Application.PlayerStats.Queries.GetAllPlayersStats;
+﻿using Application.PlayerStats.Commands.DeletePlayerStats;
+using Application.PlayerStats.Queries.GetAllPlayersStats;
 using Application.PlayerStats.Queries.GetPlayerStatsById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +38,20 @@ namespace Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePlayerById(int id)
+        {
+            var command = new DeletePlayerStatsByIdCommand(id);
+            var result = await _mediator.Send(command);
+
+            if (!result)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
     }
 }

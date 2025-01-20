@@ -1,5 +1,4 @@
-﻿
-using Domain.PlayerStats;
+﻿using Domain.PlayerStats;
 
 namespace Application.Interfaces.Repositories
 {
@@ -7,6 +6,7 @@ namespace Application.Interfaces.Repositories
     {
         List<Player> GetAllPlayersStats();
         Player GetPlayerStatsById(int id);
+        bool DeletePlayerStatsById(int id);
 
     }
 }

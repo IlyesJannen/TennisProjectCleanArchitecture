@@ -31,5 +31,15 @@ namespace Infrastructure.Repositories
         {
             return _players.FirstOrDefault(player => player.Id == id);
         }
+        public bool DeletePlayerStatsById(int id)
+        {
+            var player = _players.FirstOrDefault(p => p.Id == id);
+            if (player != null)
+            {
+                _players.Remove(player);
+                return true;
+            }
+            return false;
+        }
     }
 }
