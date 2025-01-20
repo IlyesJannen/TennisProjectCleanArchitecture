@@ -23,5 +23,9 @@ namespace Storage.Repositories
                         : new List<Player>();
         }
 
+        public List<Player> GetAllPlayers()
+        {
+            return _players;
+        }
     }
 }

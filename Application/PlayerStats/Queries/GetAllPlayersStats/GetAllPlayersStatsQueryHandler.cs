@@ -17,7 +17,8 @@ namespace Application.PlayerStats.Queries.GetAllPlayersStats
 
         public async Task<List<Player>> Handle(GetAllPlayersStatsQuery request, CancellationToken cancellationToken)
         {
-            return [];
+            var playersStats =  _playerStatsRepository.GetAllPlayers().OrderBy(p => p.Id).ToList();
+            return playersStats;
         }
     }
 }

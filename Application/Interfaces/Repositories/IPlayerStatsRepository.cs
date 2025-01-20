@@ -5,5 +5,6 @@ namespace Application.Interfaces.Repositories
 {
     public interface IPlayerStatsRepository
     {
+        List<Player> GetAllPlayers();
     }
 }

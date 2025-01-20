@@ -15,7 +15,14 @@ namespace Controllers
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
-       
+
+        [HttpGet("")]
+        public async Task<IActionResult> GetAllPlayers()
+        {
+            var query = new GetAllPlayersStatsQuery();
+            var queryResult = await _mediator.Send(query);
+            return Ok(queryResult);
+        }
 
     }
 }
