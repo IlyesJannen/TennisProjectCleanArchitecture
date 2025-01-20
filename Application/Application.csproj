@@ -7,10 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\Repositories\" />
     <Folder Include="PlayerStats\Commands\DeletePlayer\" />
-    <Folder Include="PlayerStats\Queries\GetAllPlayers\" />
-    <Folder Include="PlayerStats\Queries\GetPlayer\" />
+    <Folder Include="PlayerStats\Queries\GetPlayerStats\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>

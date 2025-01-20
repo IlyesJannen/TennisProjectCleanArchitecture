@@ -1,11 +1,20 @@
+using Application.Interfaces.Repositories;
+using Storage.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Application.Application).Assembly));
+
+
+builder.Services.AddSingleton<IPlayerStatsRepository, PlayerStatsRepository>();
+
 
 var app = builder.Build();
 
