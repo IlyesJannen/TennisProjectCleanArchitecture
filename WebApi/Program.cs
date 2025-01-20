@@ -1,5 +1,5 @@
 using Application.Interfaces.Repositories;
-using Storage.Repositories;
+using Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

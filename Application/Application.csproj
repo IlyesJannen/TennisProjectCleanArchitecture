@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="PlayerStats\Commands\DeletePlayer\" />
-    <Folder Include="PlayerStats\Queries\GetPlayerStats\" />
   </ItemGroup>
 
   <ItemGroup>

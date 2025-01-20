@@ -1,5 +1,4 @@
 ﻿using Application.Interfaces.Repositories;
-using Application.PlayerStats.Queries.GetAllPlayers;
 using Domain.PlayerStats;
 using MediatR;
 
@@ -17,7 +16,7 @@ namespace Application.PlayerStats.Queries.GetAllPlayersStats
 
         public async Task<List<Player>> Handle(GetAllPlayersStatsQuery request, CancellationToken cancellationToken)
         {
-            var playersStats =  _playerStatsRepository.GetAllPlayers().OrderBy(p => p.Id).ToList();
+            var playersStats =  _playerStatsRepository.GetAllPlayersStats().OrderBy(p => p.Id).ToList();
             return playersStats;
         }
     }

@@ -1,4 +1,5 @@
-﻿using Application.PlayerStats.Queries.GetAllPlayers;
+﻿using Application.PlayerStats.Queries.GetAllPlayersStats;
+using Application.PlayerStats.Queries.GetPlayerStatsById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,12 +18,25 @@ namespace Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> GetAllPlayers()
+        public async Task<IActionResult> GetAllPlayersStats()
         {
             var query = new GetAllPlayersStatsQuery();
             var queryResult = await _mediator.Send(query);
             return Ok(queryResult);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPlayerById(int id)
+        {
+            var query = new GetPlayerStatsByIdQuery(id);
+            var result = await _mediator.Send(query);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
     }
 }

@@ -2,7 +2,7 @@
 using Domain.PlayerStats;
 using Newtonsoft.Json;
 
-namespace Storage.Repositories
+namespace Infrastructure.Repositories
 {
     public class PlayerStatsRepository : IPlayerStatsRepository
     {
@@ -23,9 +23,13 @@ namespace Storage.Repositories
                         : new List<Player>();
         }
 
-        public List<Player> GetAllPlayers()
+        public List<Player> GetAllPlayersStats()
         {
             return _players;
+        }
+        public Player GetPlayerStatsById(int id)
+        {
+            return _players.FirstOrDefault(player => player.Id == id);
         }
     }
 }
