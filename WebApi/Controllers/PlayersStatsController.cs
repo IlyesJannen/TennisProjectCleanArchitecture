@@ -10,13 +10,22 @@ namespace Controllers
     [Route("players")]
     public class PlayersStatsController : ControllerBase
     {
+        #region propreties
 
         private readonly IMediator _mediator;
+
+        #endregion propreties
+
+        #region Constructor Methods
 
         public PlayersStatsController(IMediator mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
+
+        #endregion Constructor Methods
+
+        #region APIs
 
         [HttpGet("")]
         public async Task<IActionResult> GetAllPlayersStats()
@@ -53,5 +62,7 @@ namespace Controllers
 
             return NoContent();
         }
+
+        #endregion APIs
     }
 }

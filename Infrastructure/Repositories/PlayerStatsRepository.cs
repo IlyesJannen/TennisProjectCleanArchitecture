@@ -6,12 +6,20 @@ namespace Infrastructure.Repositories
 {
     public class PlayerStatsRepository : IPlayerStatsRepository
     {
+        #region Fields
+
         private List<Player> _players;
+
+        #endregion Fields
+
+        #region Constructor Methods
 
         public PlayerStatsRepository()
         {
             LoadPlayersFromJson();
         }
+
+        #endregion Constructor Methods
 
         private void LoadPlayersFromJson()
         {
@@ -23,6 +31,8 @@ namespace Infrastructure.Repositories
                         : new List<Player>();
         }
 
+        #region Get Methods
+
         public List<Player> GetAllPlayersStats()
         {
             return _players;
@@ -31,6 +41,11 @@ namespace Infrastructure.Repositories
         {
             return _players.FirstOrDefault(player => player.Id == id);
         }
+
+        #endregion Get Methods
+
+        #region Delete Methods
+
         public bool DeletePlayerStatsById(int id)
         {
             var player = _players.FirstOrDefault(p => p.Id == id);
@@ -41,5 +56,7 @@ namespace Infrastructure.Repositories
             }
             return false;
         }
+
+        #endregion Delete Methods
     }
 }
