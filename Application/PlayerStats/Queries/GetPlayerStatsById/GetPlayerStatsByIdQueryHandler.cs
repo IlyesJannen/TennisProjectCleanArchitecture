@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.PlayerStats.Queries.GetPlayerStatsById
 {
-    public class GetPlayerByIdQueryHandler : IRequestHandler<GetPlayerStatsByIdQuery, Player>
+    public class GetPlayerStatsByIdQueryHandler : IRequestHandler<GetPlayerStatsByIdQuery, Player>
     {
         #region Fields
 
@@ -14,7 +14,7 @@ namespace Application.PlayerStats.Queries.GetPlayerStatsById
 
         #region Constructor Methods
 
-        public GetPlayerByIdQueryHandler(IPlayerStatsRepository playerStatsRepository)
+        public GetPlayerStatsByIdQueryHandler(IPlayerStatsRepository playerStatsRepository)
         {
             _playerStatsRepository = playerStatsRepository;
         }
