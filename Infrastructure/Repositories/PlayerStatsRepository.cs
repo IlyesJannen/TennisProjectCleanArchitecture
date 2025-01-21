@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Repositories;
 using Domain.PlayerStats;
+using Infrastructure.Context;
 using Newtonsoft.Json;
 
 namespace Infrastructure.Repositories
@@ -8,38 +9,28 @@ namespace Infrastructure.Repositories
     {
         #region Fields
 
-        private List<Player> _players;
+        private readonly PlayerDbContext _context;
 
         #endregion Fields
 
         #region Constructor Methods
 
-        public PlayerStatsRepository()
+        public PlayerStatsRepository(PlayerDbContext context)
         {
-            LoadPlayersFromJson();
+            _context = context;
         }
 
         #endregion Constructor Methods
-
-        private void LoadPlayersFromJson()
-        {
-            var jsonPath = Path.Combine(AppContext.BaseDirectory, "tennisData.json");
-            var jsonData = File.ReadAllText(jsonPath);
-            var playersData = JsonConvert.DeserializeObject<Dictionary<string, List<Player>>>(jsonData);
-            _players = playersData != null && playersData.ContainsKey("players")
-                        ? playersData["players"]
-                        : new List<Player>();
-        }
 
         #region Get Methods
 
         public List<Player> GetAllPlayersStats()
         {
-            return _players;
+            return _context.Players.OrderBy(player => player.Id).ToList();
         }
         public Player GetPlayerStatsById(int id)
         {
-            return _players.FirstOrDefault(player => player.Id == id);
+            return _context.Players.FirstOrDefault(player => player.Id == id);
         }
 
         #endregion Get Methods
@@ -48,10 +39,11 @@ namespace Infrastructure.Repositories
 
         public bool DeletePlayerStatsById(int id)
         {
-            var player = _players.FirstOrDefault(p => p.Id == id);
+            var player = _context.Players.FirstOrDefault(p => p.Id == id);
             if (player != null)
             {
-                _players.Remove(player);
+                _context.Players.Remove(player);
+                _context.SaveChanges();
                 return true;
             }
             return false;

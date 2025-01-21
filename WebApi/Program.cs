@@ -1,6 +1,10 @@
 using Application.Interfaces.Repositories;
+using Domain.PlayerStats;
+using Infrastructure.Context;
 using Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 
 public class Program
 {
@@ -8,12 +12,17 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
         ConfigureServices(builder.Services);
 
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
+        using (var scope = app.Services.CreateScope())
+        {
+            var context = scope.ServiceProvider.GetRequiredService<PlayerDbContext>();
+            context.Database.EnsureCreated(); 
+            SeedDatabase(context);
+        }
+
         Configure(app);
     }
 
@@ -25,7 +34,6 @@ public class Program
 
         services.AddSwaggerGen(c =>
         {
-            // Configuration de la documentation Swagger
             c.SwaggerDoc("v1", new OpenApiInfo
             {
                 Title = "Tennis Player Stats API Test",
@@ -40,9 +48,12 @@ public class Program
             });
 
         });
-
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Application.Application).Assembly));
-        services.AddSingleton<IPlayerStatsRepository, PlayerStatsRepository>();
+
+        services.AddDbContext<PlayerDbContext>(options =>
+            options.UseInMemoryDatabase("TennisPlayersDB"));
+
+        services.AddScoped<IPlayerStatsRepository, PlayerStatsRepository>();
     }
 
     private static void Configure(WebApplication app)
@@ -57,5 +68,17 @@ public class Program
         app.UseAuthorization();
         app.MapControllers();
         app.Run();
+    }
+    private static void SeedDatabase(PlayerDbContext context)
+    {
+        var jsonPath = Path.Combine(AppContext.BaseDirectory, "tennisData.json");
+        var jsonData = File.ReadAllText(jsonPath);
+        var playersData = JsonConvert.DeserializeObject<List<Player>>(jsonData);
+
+        if (playersData != null)
+        {
+            context.Players.AddRangeAsync(playersData);
+            context.SaveChangesAsync();
+        }
     }
 }
