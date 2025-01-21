@@ -1,5 +1,6 @@
 using Application.Interfaces.Repositories;
 using Infrastructure.Repositories;
+using Microsoft.OpenApi.Models;
 
 public class Program
 {
@@ -21,6 +22,24 @@ public class Program
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
+
+        services.AddSwaggerGen(c =>
+        {
+            // Configuration de la documentation Swagger
+            c.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "Tennis Player Stats API Test",
+                Version = "v1",
+                Description = "This API provides player statistics, using clean architecture with CQRS and Mediator pattern",
+                Contact = new OpenApiContact
+                {
+                    Name = "Jennen Ilyes",
+                    Email = "ilyes.jannen@gmail.com",
+                    Url = new Uri("https://github.com/IlyesJannen/TennisProjectCleanArchitecture"),
+                }
+            });
+
+        });
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Application.Application).Assembly));
         services.AddSingleton<IPlayerStatsRepository, PlayerStatsRepository>();
