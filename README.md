@@ -63,22 +63,6 @@ Swagger is enabled by default in development mode. Access it at:
 https://localhost:5001/swagger
 ```
 
-## Testing
-
-### Running Unit Tests
-
-1. Navigate to the test project:
-
-   ```bash
-   cd Tests
-   ```
-
-2. Run the tests:
-
-   ```bash
-   dotnet test
-   ```
-
 ### Verifying API Responses
 
 - `GET /players`: Returns all players sorted by ID.
